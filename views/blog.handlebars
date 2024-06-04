@@ -1,0 +1,12 @@
+<section class="container">
+  <h3 class="blog-name">{{blogpost.title}}</h3>
+  <p>{{blogpost.content}}</p>
+  
+  <section class="flex-row justify-center">
+    {{#each blogpost.comments as |comment|}}
+
+        <p>{{comment.content}}</p>
+
+    {{/each}}
+  </section>
+</section>

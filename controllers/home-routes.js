@@ -55,18 +55,18 @@ router.get('/blog/:id', withAuth, async (req, res) => {
 
 // GET one painting
 // Use the custom middleware before allowing the user to access the painting
-router.get('/painting/:id', withAuth, async (req, res) => {
-  try {
-    const dbPaintingData = await Painting.findByPk(req.params.id);
+// router.get('/painting/:id', withAuth, async (req, res) => {
+//   try {
+//     const dbPaintingData = await Painting.findByPk(req.params.id);
 
-    const painting = dbPaintingData.get({ plain: true });
+//     const painting = dbPaintingData.get({ plain: true });
 
-    res.render('painting', { painting, loggedIn: req.session.loggedIn });
-  } catch (err) {
-    console.log(err);
-    res.status(500).json(err);
-  }
-});
+//     res.render('painting', { painting, loggedIn: req.session.loggedIn });
+//   } catch (err) {
+//     console.log(err);
+//     res.status(500).json(err);
+//   }
+// });
 
 router.get('/login', (req, res) => {
   if (req.session.loggedIn) {

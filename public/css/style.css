@@ -9,6 +9,40 @@
   --border-radius: 0.3rem;
 }
 
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 1em;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+}
+div + div {
+  margin-top: 1em;
+}
+label {
+  display: block;
+  margin-bottom: .5em;
+  font-weight: bold;
+}
+input, textarea {
+  font: 1em sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #999;
+  padding: .5em;
+}
+input:focus, textarea:focus {
+  border-color: #000;
+}
+.button {
+  text-align: center;
+  margin-top: 1em;
+}
+button {
+  padding: .5em 1em;
+  font-size: 1em;
+}
+
 body {
   font-family: Arial;
   margin: 0;
@@ -66,16 +100,6 @@ nav a:hover {
   background-color: var(--dark);
 }
 
-.gallery {
-  flex: 4;
-  background-color: #fff;
-  padding: 50px;
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: center;
-  align-items: center;
-}
-
 .btn-no-style {
   background: none;
   border: none;
@@ -113,6 +137,7 @@ img {
   border-radius: 10px;
   background-color: var(--light);
   color: var(--dark);
+  flex-direction: column;
 }
 
 .login-card {
@@ -144,15 +169,10 @@ img {
   font-weight: bold;
 }
 
-.gallery-name {
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 2px 2px 5px var(--secondary);
-  border: 10px groove var(--light);
-  padding-top: 30px;
-  padding-bottom: 30px;
-  padding-right: 100px;
-  padding-left: 100px;
+.element {
+  max-width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* LAYOUT */
@@ -161,4 +181,10 @@ img {
   flex-flow: column wrap;
   align-content: flex-start;
   align-items: center;
+}
+
+.footer{
+  margin-top:5px;
+  float:right;
+  font-size:0.875em;
 }

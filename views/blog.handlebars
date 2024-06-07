@@ -8,5 +8,15 @@
         <p>{{comment.content}}</p>
 
     {{/each}}
+      <form  action="/comment" method="post">
+      <div>
+         <input type="hidden" id="blog_id" name="blog_id" value={{blogpost.id}}>
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment" rows="6" required></textarea>
+    </div>
+    <div class="button">
+        <button type="submit">Submit</button>
+    </div>
+  </form>
   </section>
 </section>

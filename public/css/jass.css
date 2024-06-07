@@ -1180,6 +1180,7 @@ form [type='radio'] {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .flex-column {

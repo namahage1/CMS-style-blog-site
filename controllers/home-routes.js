@@ -93,5 +93,18 @@ router.post('/comment', async(req, res) => {//TODO need current user's info
     res.status(400).json(err);
   }
 });
+router.get('/redirect', (req, res) => {
+  try{
+  res.redirect('/blog-form');
+  }catch(err){
+    res.status(400).json(err);
+  }
+});
 
+router.get('/blog-form', (req, res) => {
+  // res.send('This is the new route!');
+  res.render('blog-form', {
+    loggedIn: req.session.loggedIn
+  })
+});
 module.exports = router;

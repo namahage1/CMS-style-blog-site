@@ -1,7 +1,12 @@
 
 <section class="container">
     <div class="center">
-        <button type="button" class="element" id="newpost">+New Post</button>
+        <button type="button" class="element" id="blogform">+New Post</button>
     </div>
 </section>
+    <script>
+        document.getElementById('blogform').addEventListener('click', function() {
+            window.location.href = '/redirect';
+        });
+    </script>
 

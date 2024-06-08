@@ -27,14 +27,11 @@ router.get('/', async (req, res) => {
 // Use the custom middleware before allowing the user to access the blog
 router.get('/blog/:id', withAuth, async (req, res) => {
   try {
-
-    const blogData = await Blog.findByPk(req.params.id, {
+      const blogData = await Blog.findByPk(req.params.id, {
       include: Comment
     });
 
     const blogpost = blogData.get({ plain: true });
-
-   // console.log(blogpost)
 
     res.render('blog', { 
       blogpost, 
@@ -60,7 +57,8 @@ router.get('/dashboard', async (req, res) => {
   try {
     
     if(req.session.loggedIn){
-      console.log("logged in so should be able to click link");
+      res.render('dashboard');
+      
 
     }else{
       res.render('login');
@@ -73,7 +71,7 @@ router.get('/dashboard', async (req, res) => {
 
     res.render('homepage', {
       blogposts,
-      loggedIn: req.session.loggedIn,
+      loggedIn: req.session.loggedIn
     });}
   } catch (err) {
     console.log(err);

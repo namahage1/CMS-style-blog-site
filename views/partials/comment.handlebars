@@ -1,11 +1,30 @@
 <section class="card">
   <a href="/comment/{{id}}">
     <header>{{title}}</header>
-
-    <div class="card-body">
-      {{!-- <img src="/images/{{filename}}" alt="{{description}}"> --}}
-      <p>By: {{username}}</p>
-    </div>
   </a>
-
+  <div class="card-body">
+    <section class="flex-column justify-center">
+      {{#each blogpost.comments as |comment|}}
+        <p>{{comment.content}}</p>
+        <p>By: {{user.username}}</p>
+      {{/each}}
+      <form action="/comment" method="post">
+        <div>
+          <input
+            type="hidden"
+            id="blog_id"
+            name="blog_id"
+            value={{blogpost.id}}
+          />
+          <label for="comment">Comment:</label>
+          <textarea id="comment" name="comment" rows="6" required></textarea>
+        </div>
+        <div class="button">
+          <button type="submit">Submit</button>
+        </div>
+      </form>
+    </section>
+    
+    {{!TODO: pull username }}
+  </div>
 </section>

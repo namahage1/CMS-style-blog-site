@@ -21,8 +21,22 @@ const sess = {
   }),
 };
 
-app.use(session(sess));
+app.use(session({
+  sess,
+ cookie:{
+  maxAge:60000
+ }
+}));
 
+// Middleware to handle session timeout
+app.use((req, res, next) => {
+  if (req.session) {
+    // Reset the maxAge on every request to extend session timeout
+    req.session.cookie.expires = new Date(Date.now() + 60000); // 1 minute
+    req.session.cookie.maxAge = 60000; // 1 minute
+  }
+  next();
+});
 const hbs = exphbs.create({ helpers });
 
 app.engine('handlebars', hbs.engine);

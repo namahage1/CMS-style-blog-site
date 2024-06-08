@@ -3,6 +3,13 @@
     <div class="center">
         <button type="button" class="element" id="blogform">+New Post</button>
     </div>
+    <div>
+    
+{{#each blogposts as |blogpost|}}
+    {{> dashboard-blog-details}}
+{{/each}}
+
+       </div> 
 </section>
     <script>
         document.getElementById('blogform').addEventListener('click', function() {

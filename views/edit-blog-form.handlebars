@@ -1,0 +1,23 @@
+<section class="card">
+  <h1>THIS IS EDIT and DELETE</h1>
+  <div class="card-body">
+    <section class="flex-column justify-center">
+      <form id="blog-form">
+        <div>
+        <label for="title">Title:</label>
+        <input class="form-input" type="text" id="new-title" value="{{blogpost.title}}"/>
+          <label for="newblog">Content:</label>
+          <textarea id="newblog" name="newblog" rows="20" required>{{blogpost.content}}</textarea>
+        </div>
+        <div class="button" id="update">
+          <button type="submit">Update</button>
+        </div>
+        {{!-- <div class="button" id="delete">
+          <button type="submit">Delete</button>
+        </div> --}}
+      </form>
+    </section>
+  </div>
+</section>
+
+<script src="/js/edit-blog-form.js"></script>

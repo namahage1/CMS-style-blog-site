@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Blog, Comment } = require('../models');
+const { Blog, Comment, User } = require('../models');
 // Import the custom middleware
 const withAuth = require('../utils/auth');
 
@@ -28,10 +28,15 @@ router.get('/', async (req, res) => {
 router.get('/blog/:id', withAuth, async (req, res) => {
   try {
       const blogData = await Blog.findByPk(req.params.id, {
-      include: Comment
+      include: {
+        model: Comment,
+        include: User
+      }
     });
 
     const blogpost = blogData.get({ plain: true });
+
+    console.log(blogpost)
 
     res.render('blog', { 
       blogpost, 
@@ -57,7 +62,20 @@ router.get('/dashboard', async (req, res) => {
   try {
     
     if(req.session.loggedIn){
-      res.render('dashboard');
+
+      const blogData = await Blog.findAll({
+        where: {
+          user_id: req.session.user_id
+        }
+      })
+
+      const blogposts = blogData.map(blog => {
+        return blog.get({ plain: true })
+      })
+
+      res.render('dashboard', {
+        blogposts
+      });
       
 
     }else{
@@ -78,9 +96,7 @@ router.get('/dashboard', async (req, res) => {
     res.status(500).json(err);
   }
 });
-router.post('/comment', async(req, res) => {//TODO need current user's info
-  // const blogId = req.body.blog_id;
-  // const comment=  req.body.comment;
+router.post('/comment', async(req, res) => {
   try{
   const commentData = await Comment.create({
     blog_id: req.body.blog_id,
@@ -88,7 +104,7 @@ router.post('/comment', async(req, res) => {//TODO need current user's info
     content: req.body.comment
   });
      
-  res.status(200).json(req.user);
+  res.status(200).json(commentData);
   }catch(err){
     res.status(400).json(err);
   }
@@ -102,9 +118,79 @@ router.get('/redirect', (req, res) => {
 });
 
 router.get('/blog-form', (req, res) => {
-  // res.send('This is the new route!');
+  try{
   res.render('blog-form', {
     loggedIn: req.session.loggedIn
   })
+}catch(err){
+  res.status(400).json(err);
+}
+});
+
+router.get('/edit/blog-form/:id', async (req, res) => {
+  try{
+
+    const blogData = await Blog.findByPk(req.params.id);
+
+    const blogpost = blogData.get({plain: true})
+
+  res.render('edit-blog-form', {
+    loggedIn: req.session.loggedIn,
+    blogpost
+  })
+}catch(err){
+  res.status(400).json(err);
+}
+});
+
+router.post('/blog-form', async(req, res) => {//TODO need current 
+  try{
+  const newBlogData = await Blog.create({
+    title: req.body.title,
+    content: req.body.content,
+    user_id: req.session.user_id
+  });
+     
+  res.status(200).json(newBlogData);
+  }catch(err){
+    res.status(400).json(err);
+  }
+});
+
+// EDIT FORM
+router.put('/edit-blog-form/:id', async(req, res) => {//TODO need current 
+
+  try{
+    // const blogData = await Blog.findByPk(req.params.id);
+
+  const newBlogData = await Blog.update(req.body,{
+    where: {
+      id: req.params.id
+    }
+  });
+  if (!newBlogData[0]) {
+    res.status(404).json({ message: 'No user with this id!' });
+    return;
+  }     
+  res.status(200).json(newBlogData);
+  }catch(err){
+    res.status(400).json(err);
+  }
+});
+
+// DELETE a blog
+router.delete('/:id', async (req, res) => {
+  try {
+    const blogData = await Blog.destroy({
+      where: { id: req.params.id }
+    });
+    if (!blogData) {
+      res.status(404).json({ message: 'No blog!' });
+      return;
+    }
+    res.status(200).json(blogData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 module.exports = router;

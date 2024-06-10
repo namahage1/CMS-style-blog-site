@@ -1,19 +1,20 @@
 
 <section class="container">
-    <div class="center">
-        <button type="button" class="element" id="blogform">+New Post</button>
-    </div>
+
     <div>
     
-{{#each blogposts as |blogpost|}}
-    {{> dashboard-blog-details}}
-{{/each}}
+        {{#each blogposts as |blogpost|}}
+            {{> dashboard-blog-details}}
+        {{/each}}
 
-       </div> 
+        <div class="center">
+            <button type="button" class="element" id="blogform">+New Post</button>
+        </div>
+    </div> 
 </section>
-    <script>
-        document.getElementById('blogform').addEventListener('click', function() {
-            window.location.href = '/redirect';
-        });
-    </script>
+<script>
+    document.getElementById('blogform').addEventListener('click', function() {
+        window.location.href = '/redirect';
+    });
+</script>
 

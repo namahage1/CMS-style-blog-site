@@ -13,9 +13,6 @@ router.get("/", async (req, res) => {
     const blogposts = blogData.map((blog) => {
       return blog.get({ plain: true });
     });
-
-    console.log(blogposts)
-
     res.render("homepage", {
       blogposts,
       loggedIn: req.session.loggedIn,
@@ -39,8 +36,6 @@ router.get("/blog/:id", withAuth, async (req, res) => {
 
     const blogpost = blogData.get({ plain: true });
 
-    console.log(blogpost);
-
     res.render("blog", {
       blogpost,
       loggedIn: req.session.loggedIn,
@@ -62,7 +57,8 @@ router.get("/login", (req, res) => {
 
 // redirect to form to comment
 router.get("/dashboard", async (req, res) => {
-  try {
+  try { 
+
     if (req.session.loggedIn) {
       const blogData = await Blog.findAll({
         where: {
@@ -76,6 +72,7 @@ router.get("/dashboard", async (req, res) => {
 
       res.render("dashboard", {
         blogposts,
+        loggedIn: req.session.loggedIn
       });
     } else {
       res.render("login");
@@ -96,6 +93,8 @@ router.get("/dashboard", async (req, res) => {
     res.status(500).json(err);
   }
 });
+
+//add comment
 router.post("/comment", async (req, res) => {
   try {
     const commentData = await Comment.create({
@@ -109,6 +108,7 @@ router.post("/comment", async (req, res) => {
     res.status(400).json(err);
   }
 });
+//when new post button is clicked, it will be redirected to the form
 router.get("/redirect", (req, res) => {
   try {
     res.redirect("/blog-form");
@@ -127,6 +127,7 @@ router.get("/blog-form", (req, res) => {
   }
 });
 
+//get one blog by id
 router.get("/edit/blog-form/:id", async (req, res) => {
   try {
     const blogData = await Blog.findByPk(req.params.id);
@@ -142,8 +143,8 @@ router.get("/edit/blog-form/:id", async (req, res) => {
   }
 });
 
+//create new blog
 router.post("/blog-form", async (req, res) => {
-  //TODO need current
   try {
     const newBlogData = await Blog.create({
       title: req.body.title,
@@ -159,10 +160,8 @@ router.post("/blog-form", async (req, res) => {
 
 // EDIT FORM
 router.put("/blog/edit/:id", async (req, res) => {
-  //TODO need current
 
   try {
-    // const blogData = await Blog.findByPk(req.params.id);
     console.log("Editing a post!");
 
     const newBlogData = await Blog.update(req.body, {
@@ -182,7 +181,7 @@ router.put("/blog/edit/:id", async (req, res) => {
   }
 });
 
-// // DELETE a blog
+//  DELETE a blog
 router.delete('/blog/delete/:id', async (req, res) => {
   try {
     const blogData = await Blog.destroy({

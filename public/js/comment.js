@@ -6,9 +6,6 @@ const handleCommentSubmit = (event) => {
     const blog_id = document.querySelector("#blog_id").value;
     const comment = document.querySelector("#comment").value;
 
-    console.log(blog_id)
-    console.log(comment)
-
     fetch("/comment", {
         method: "POST",
         body: JSON.stringify({

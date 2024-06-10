@@ -7,7 +7,6 @@
       {{#each blogpost.comments as |comment|}}
         <p>{{comment.content}}</p>
         <p>By: {{comment.user.username}}</p>
-        <p>---------------------</p>
       {{/each}}
       {{!-- <form action="/comment" method="post"> --}}
       <form id="comment-form">
@@ -27,7 +26,6 @@
       </form>
     </section>
     
-    {{!TODO: pull username }}
   </div>
 </section>
 
